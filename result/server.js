@@ -8,9 +8,12 @@ var express = require('express'),
     methodOverride = require('method-override'),
     app = express(),
     server = require('http').Server(app),
-    io = require('socket.io')(server);
+    io = require('socket.io')(server, {
+      serveClient: false,
+      path: '/socket.io'
+    });
 
-io.set('transports', ['polling']);
+io.set('transports', ['websocket']);
 
 var port = process.env.PORT || 4000;
 
@@ -28,22 +31,22 @@ var pool = new pg.Pool({
 });
 
 async.retry(
-  {times: 1000, interval: 1000},
-  function(callback) {
-    pool.connect(function(err, client, done) {
+    {times: 1000, interval: 1000},
+    function(callback) {
+      pool.connect(function(err, client, done) {
+        if (err) {
+          console.error("Waiting for db");
+        }
+        callback(err, client);
+      });
+    },
+    function(err, client) {
       if (err) {
-        console.error("Waiting for db");
+        return console.error("Giving up");
       }
-      callback(err, client);
-    });
-  },
-  function(err, client) {
-    if (err) {
-      return console.error("Giving up");
+      console.log("Connected to db");
+      getVotes(client);
     }
-    console.log("Connected to db");
-    getVotes(client);
-  }
 );
 
 function getVotes(client) {
@@ -52,7 +55,6 @@ function getVotes(client) {
       console.error("Error performing query: " + err);
     } else {
       var votes = collectVotesFromResult(result);
-      console.log("Votes: " + JSON.stringify(votes));
       io.sockets.emit("scores", JSON.stringify(votes));
     }
 
