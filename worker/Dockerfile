@@ -1,4 +1,4 @@
-FROM java:openjdk-8-jdk-alpine
+FROM openjdk:8-jre
 
 RUN MAVEN_VERSION=3.3.3 \
  && cd /usr/share \
