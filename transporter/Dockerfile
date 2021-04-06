@@ -16,4 +16,4 @@ RUN ["mvn", "verify"]
 ADD src/main /code/src/main
 RUN ["mvn", "package"]
 
-CMD ["java", "-jar", "target/transporter-1.0-SNAPSHOT.jar"]
+CMD ["java", "-jar", "target/transporter-jar-with-dependencies.jar"]
