@@ -2,7 +2,8 @@
 project.lock.json
 bin/
 obj/
+target/
 
 *.iml
-.idea
-*node_modules
+.idea/
+*node_modules/
