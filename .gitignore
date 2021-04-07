@@ -3,7 +3,7 @@ project.lock.json
 bin/
 obj/
 target/
-
+venv/
 *.iml
 .idea/
 *node_modules/
