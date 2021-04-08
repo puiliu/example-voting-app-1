@@ -1,0 +1,35 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: voting-app-docker
+  namespace: kotlincook-dev
+  labels:
+    app: voting-app
+    app.kubernetes.io/component: voting-app
+    app.kubernetes.io/instance: voting-app
+    app.kubernetes.io/name: python
+    app.kubernetes.io/part-of: voting-app
+    app.openshift.io/runtime: python
+    app.openshift.io/runtime-version: 3.8-ubi7
+spec:
+  triggers:
+    - type: GitHub
+      github:
+        secret: secret101
+    - type: GitLab
+      gitlab:
+        secret: voting-app-gitlab-webhook-secret
+    - type: ConfigChange
+  runPolicy: Serial
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/kotlincook/example-voting-app'
+    contextDir: /vote
+  strategy:
+    type: Docker
+    dockerStrategy: {}
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'voting-app-docker:latest'

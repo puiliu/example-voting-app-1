@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: voting-app-docker
+  namespace: kotlincook-dev
+spec:
+  selector:
+    app: voting-app-docker
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

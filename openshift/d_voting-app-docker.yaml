@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: voting-app-docker
+  namespace: kotlincook-dev
+  labels:
+    app: voting-app-docker
+    app.kubernetes.io/component: voting-app-docker
+    app.kubernetes.io/instance: voting-app-docker
+    app.kubernetes.io/name: python
+    app.kubernetes.io/part-of: voting-app-docker
+    app.openshift.io/runtime: python
+    app.openshift.io/runtime-version: 3.8-ubi7
+spec:
+  selector:
+    matchLabels:
+      app: voting-app-docker
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: voting-app-docker
+    spec:
+      containers:
+        - name: voting-app-docker
+#          image: voting-app-docker klappte nicht! Die folgenden Infos hab ich aus dem ImageStream
+          image: image-registry.openshift-image-registry.svc:5000/kotlincook-dev/voting-app-docker@sha256:13aea8f7853a933ca8303f8c9f7faa97d59913cadcdf17533c00e3435c959af6
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: REDIS_PASSWORD
+              value: redis_password
