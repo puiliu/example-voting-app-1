@@ -1,0 +1,16 @@
+---
+apiVersion: 1.0.0
+metadata:
+  name: voting-dev-environment
+projects:
+  - name: voting-app
+    source:
+      type: git
+      location: 'https://github.com/kotlincook/example-voting-app.git'
+components:
+  - alias: theia-editor
+    type: cheEditor
+    id: eclipse/che-theia/next
+  - alias: exec-plugin
+    type: chePlugin
+    id: eclipse/che-machine-exec-plugin/0.0.1
