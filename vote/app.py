@@ -7,7 +7,7 @@ import json
 
 option_a = os.getenv('OPTION_A', "Kotlin")
 option_b = os.getenv('OPTION_B', "Java")
-redis_password = os.getenv('REDIS_PASSWORD', "redis_password")
+redis_password = os.getenv('REDIS_PASSWORD', "falsch")
 hostname = socket.gethostname()
 
 app = Flask(__name__)
