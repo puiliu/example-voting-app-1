@@ -2,7 +2,7 @@
 <html ng-app="votingapp">
   <head>
     <meta charset="utf-8">
-    <title>Kotlin vs Java -- Result</title>
+    <title>Kotlin vs. Java - Abstimmungsergebnis</title>
     <base href="/index.html">
     <meta name = "viewport" content = "width=device-width, initial-scale = 1.0">
     <meta name="keywords" content="docker-compose, docker, stack">
@@ -32,9 +32,9 @@
       </div>
     </div>
     <div id="result">
-      <span ng-if="total == 0">No votes yet</span>
-      <span ng-if="total == 1">{{total}} vote</span>
-      <span ng-if="total >= 2">{{total}} votes</span>
+      <span ng-if="total == 0">Bislang keine Stimmen</span>
+      <span ng-if="total == 1">{{total}} Stimmen</span>
+      <span ng-if="total >= 2">{{total}} Stimmen</span>
     </div>
     <script src="socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
