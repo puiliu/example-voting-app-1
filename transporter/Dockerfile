@@ -1,4 +1,4 @@
-FROM openjdk:11-jdk
+FROM openjdk/openjdk-11-rhel7
 
 RUN MAVEN_VERSION=3.8.1 \
  && cd /usr/share \
