@@ -1,4 +1,4 @@
-FROM openshift/openjdk-11-rhel7
+FROM ubi8/openjdk-11
 
 RUN MAVEN_VERSION=3.8.1 \
  && cd /usr/share \
