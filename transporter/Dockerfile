@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM openjdk:11-jdk
 
 RUN MAVEN_VERSION=3.8.1 \
  && cd /usr/share \
