@@ -1,4 +1,4 @@
-FROM openjdk/openjdk-11-rhel7
+FROM redhat-openjdk-18/openjdk18-openshift
 
 RUN MAVEN_VERSION=3.8.1 \
  && cd /usr/share \
