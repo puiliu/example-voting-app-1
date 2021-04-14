@@ -1,0 +1,10 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: voting-app-image
+  namespace: gravensteiners
+spec:
+  type: image
+  params:
+    - name: url
+      value: 'image-registry.openshift-image-registry.svc:5000/gravensteiner/voting-app:latest'

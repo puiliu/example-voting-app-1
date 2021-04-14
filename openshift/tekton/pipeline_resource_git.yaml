@@ -1,0 +1,10 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: voting-app-repo
+  namespace: gravensteiner
+spec:
+  type: git
+  params:
+    - name: url
+      value: 'https://github.com/kotlincook/example-voting-app/tree/master/vote'
