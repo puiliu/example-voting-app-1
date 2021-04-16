@@ -13,13 +13,15 @@ spec:
       type: string
   steps:
     - name: patch
-      image: registry.redhat.io/ubi7/ubi-minimal
-      command: ["bin/bash", "-c"]
+      image: quay.io/openshift/origin-cli
+      command:
+        - /bin/bash
       args:
-        - |-
-          oc patch deployment $(input.params.deployment) --patch='{"spec":{"template":{"spec":{
+        - '-c'
+        - >-
+          oc patch deployment $(inputs.params.deployment) --patch='{"spec":{"template":{"spec":{
             "containers": [{
-              "name": "$(inputs.params.deployment)"
+              "name": "$(inputs.params.deployment)",
               "image": "$(inputs.resources.image.url)"
             }]
           }}}}'

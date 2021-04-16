@@ -47,3 +47,15 @@ spec:
       taskRef:
         kind: Task
         name: apply-manifests
+    - name: update-deployment
+      taskRef:
+        name: update-deployment
+      resources:
+        inputs:
+          - name: image
+            resource: voting-app-image
+      params:
+        - name: deployment
+          value: $(params.deployment-name)
+      runAfter:
+        - apply-manifests
