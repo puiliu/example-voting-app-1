@@ -2,6 +2,7 @@ apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: update-deployment
+  namespace: gravensteiner
 spec:
   resources:
     inputs:
@@ -12,7 +13,7 @@ spec:
       type: string
   steps:
     - name: patch
-      image: quay.io/openshift/origin-cli:latest
+      image: registry.redhat.io/ubi7/ubi-minimal
       command: ["bin/bash", "-c"]
       args:
         - |-

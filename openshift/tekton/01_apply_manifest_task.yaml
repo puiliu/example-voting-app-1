@@ -2,6 +2,7 @@ apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: apply-manifests
+  namespace: gravensteiner
 spec:
   resources:
     inputs:
@@ -13,7 +14,7 @@ spec:
       default: "k8s"
   steps:
     - name: apply
-      image: quay.io/openshift/origin-cli:latest
+      image: registry.redhat.io/ubi7/ubi-minimal
       workingDir: /workspace/source
       command: ["bin/bash", "-c"]
       args:

@@ -2,49 +2,38 @@ apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
   name: build-and-deploy
+  namespace: gravensteiner
 spec:
   resources:
-  - name: git-repo
-    type: git
-  - name: image
-    type: 1mage
+    - name: voting-app-repo
+      type: git
+    - name: voting-app-image
+      type: image
   params:
-  - name: deployment-name
-    type: string
-    description: name of the deployment to be patched
+    - name: deployment-name
+      type: string
+      description: name of the deployment to be patched
   tasks:
-  - name: build-image
-    taskRef:
-      name: buildah
-      kind: ClusterTask
-    resources:
-      inputs:
-      - name: source
-        resource: git-repo
-      outputs:
-      - name: image
-        resource: image
-    params:
-    - name: TLSVERIFY
-      value: "false"
-  - name: apply-manifests
-    taskRef:
-      name: apply-manifests
-    resources:
-      inputs:
-      - name: source
-        resource: git-repo
-    runAfter:
-    - build-image
-  - name: update-deployment
-    taskRef:
-      name: update-deployment
-    resources:
-      inputs:
-      - name: image
-        resource: image
-    params:
-    - name: deployment
-      value: $(params.deployment-name]
-    runAfter:
-    - apply-manifests
+    - name: buildah-pr
+      taskRef:
+        kind: ClusterTask
+        name: buildah-pr
+      params:
+        - name: BUILDER_IMAGE
+          value: >-
+            registry.redhat.io/rhel8/buildah@sha256:785f0d039113ba978c4ee467f0554de7b72411b5c555a16abe60062759799497
+        - name: DOCKERFILE
+          value: ./Dockerfile
+        - name: CONTEXT
+          value: .
+        - name: FORMAT
+          value: oci
+        - name: TLSVERIFY
+          value: 'false'
+      resources:
+        inputs:
+          - name: source
+            resource: voting-app-repo
+        outputs:
+          - name: image
+            resource: voting-app-image
