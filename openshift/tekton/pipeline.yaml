@@ -4,20 +4,17 @@ metadata:
   name: build-and-deploy
   namespace: gravensteiner
 spec:
+  params:
+    - description: name of the deployment to be patched
+      name: deployment-name
+      type: string
   resources:
     - name: voting-app-repo
       type: git
     - name: voting-app-image
       type: image
-  params:
-    - name: deployment-name
-      type: string
-      description: name of the deployment to be patched
   tasks:
     - name: buildah-pr
-      taskRef:
-        kind: ClusterTask
-        name: buildah-pr
       params:
         - name: BUILDER_IMAGE
           value: >-
@@ -37,3 +34,16 @@ spec:
         outputs:
           - name: image
             resource: voting-app-image
+      taskRef:
+        kind: ClusterTask
+        name: buildah-pr
+    - name: apply-manifests
+      resources:
+        inputs:
+          - name: source
+            resource: voting-app-repo
+      runAfter:
+        - buildah-pr
+      taskRef:
+        kind: Task
+        name: apply-manifests
