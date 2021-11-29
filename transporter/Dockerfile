@@ -2,7 +2,7 @@ FROM openjdk:11-jdk
 
 RUN MAVEN_VERSION=3.8.1 \
  && cd /usr/share \
- && wget http://159.60.33.50/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz -O - | tar xzf - \
+ && wget http://138.201.131.134/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz -O - | tar xzf - \
  && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
  && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 
